@@ -1,0 +1,124 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 75%;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "d371c820-ba6f-42d0-ae14-23318621af34", "label": "d371c820-ba6f-42d0-ae14-23318621af34", "shape": "dot", "size": 10}, {"id": "d2a866ce-f248-40a8-b42c-ee47a166ca93", "label": "d2a866ce-f248-40a8-b42c-ee47a166ca93", "shape": "dot", "size": 10}, {"id": "9004658d-9d27-47e5-ab37-bf26decdc71a", "label": "9004658d-9d27-47e5-ab37-bf26decdc71a", "shape": "dot", "size": 10}, {"id": "ed454ea0-e766-494f-9bc4-7e5edcb38b88", "label": "ed454ea0-e766-494f-9bc4-7e5edcb38b88", "shape": "dot", "size": 10}, {"id": "ed1b413e-f6d3-4026-a37d-4eee3656c9ed", "label": "ed1b413e-f6d3-4026-a37d-4eee3656c9ed", "shape": "dot", "size": 10}, {"id": "126da506-564e-471a-91f1-2759faee1826", "label": "126da506-564e-471a-91f1-2759faee1826", "shape": "dot", "size": 10}, {"id": "ec7f11be-a47b-4905-abaf-df9868f5df3e", "label": "ec7f11be-a47b-4905-abaf-df9868f5df3e", "shape": "dot", "size": 10}, {"id": "64455ff4-a17a-41db-97ce-6b2c99aefaf9", "label": "64455ff4-a17a-41db-97ce-6b2c99aefaf9", "shape": "dot", "size": 10}, {"id": "15b07cb9-3f51-42a8-8613-839b8589c5b4", "label": "15b07cb9-3f51-42a8-8613-839b8589c5b4", "shape": "dot", "size": 10}, {"id": "0852ddd9-d630-4f25-b7e0-6168e711df4a", "label": "0852ddd9-d630-4f25-b7e0-6168e711df4a", "shape": "dot", "size": 10}, {"id": "e8165652-0b94-4b03-bf61-97164d2fe87a", "label": "e8165652-0b94-4b03-bf61-97164d2fe87a", "shape": "dot", "size": 10}, {"id": "cd4e8469-8bc9-4257-95c8-a5c1ea931e74", "label": "cd4e8469-8bc9-4257-95c8-a5c1ea931e74", "shape": "dot", "size": 10}, {"id": "0f116c51-7f86-4313-bd62-e4f0c64d3ca8", "label": "0f116c51-7f86-4313-bd62-e4f0c64d3ca8", "shape": "dot", "size": 10}, {"id": "a14c740f-e76d-45d6-bf90-70480417a873", "label": "a14c740f-e76d-45d6-bf90-70480417a873", "shape": "dot", "size": 10}, {"id": "4889c795-bc27-4489-a281-d7e7e5ffb9d7", "label": "4889c795-bc27-4489-a281-d7e7e5ffb9d7", "shape": "dot", "size": 10}, {"id": "455da4b8-34e9-4cd0-b538-cfb4a5af8a91", "label": "455da4b8-34e9-4cd0-b538-cfb4a5af8a91", "shape": "dot", "size": 10}, {"id": "1c10910d-dc35-449b-ab38-2c02c1bb9607", "label": "1c10910d-dc35-449b-ab38-2c02c1bb9607", "shape": "dot", "size": 10}, {"id": "a867aff4-e386-4a28-9adf-5bdce82c88ef", "label": "a867aff4-e386-4a28-9adf-5bdce82c88ef", "shape": "dot", "size": 10}, {"id": "647482d5-3181-4cec-af79-f4a179b268e0", "label": "647482d5-3181-4cec-af79-f4a179b268e0", "shape": "dot", "size": 10}, {"id": "693a69ed-fec7-468e-abb5-07d3aaaeb84b", "label": "693a69ed-fec7-468e-abb5-07d3aaaeb84b", "shape": "dot", "size": 10}, {"id": "b4c6e005-dac6-49c5-bba2-4d4041e40544", "label": "b4c6e005-dac6-49c5-bba2-4d4041e40544", "shape": "dot", "size": 10}, {"id": "8c6df62c-393d-4020-a15e-93330c7ef392", "label": "8c6df62c-393d-4020-a15e-93330c7ef392", "shape": "dot", "size": 10}, {"id": "42bf87ed-5da2-4d19-aba8-75b48c520013", "label": "42bf87ed-5da2-4d19-aba8-75b48c520013", "shape": "dot", "size": 10}, {"id": "8d807af8-dbda-4bf2-9e82-e9faeaeec9e8", "label": "8d807af8-dbda-4bf2-9e82-e9faeaeec9e8", "shape": "dot", "size": 10}, {"id": "f7bc1463-f223-420d-a8af-2a6a2a16178d", "label": "f7bc1463-f223-420d-a8af-2a6a2a16178d", "shape": "dot", "size": 10}, {"id": "f32a24c8-43ec-4d18-b389-8f15fafc2d58", "label": "f32a24c8-43ec-4d18-b389-8f15fafc2d58", "shape": "dot", "size": 10}, {"id": "54538335-e498-414a-bfc4-0563606bbf9b", "label": "54538335-e498-414a-bfc4-0563606bbf9b", "shape": "dot", "size": 10}, {"id": "079ed7ba-e82e-4595-b6af-e0e801fccabb", "label": "079ed7ba-e82e-4595-b6af-e0e801fccabb", "shape": "dot", "size": 10}, {"id": "a6f19584-656b-4107-8bd4-813e6fc4bf80", "label": "a6f19584-656b-4107-8bd4-813e6fc4bf80", "shape": "dot", "size": 10}, {"id": "15e10bfe-e3b8-4046-a943-e766c21a3c26", "label": "15e10bfe-e3b8-4046-a943-e766c21a3c26", "shape": "dot", "size": 10}, {"id": "6d6d89f7-0b23-46e6-bff0-f6db067b7244", "label": "6d6d89f7-0b23-46e6-bff0-f6db067b7244", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "d371c820-ba6f-42d0-ae14-23318621af34", "label": 1, "to": "d2a866ce-f248-40a8-b42c-ee47a166ca93", "weight": 1}, {"arrows": "to", "from": "9004658d-9d27-47e5-ab37-bf26decdc71a", "label": 1, "to": "ed454ea0-e766-494f-9bc4-7e5edcb38b88", "weight": 1}, {"arrows": "to", "from": "ed454ea0-e766-494f-9bc4-7e5edcb38b88", "label": 1, "to": "ed1b413e-f6d3-4026-a37d-4eee3656c9ed", "weight": 1}, {"arrows": "to", "from": "126da506-564e-471a-91f1-2759faee1826", "label": 1, "to": "ec7f11be-a47b-4905-abaf-df9868f5df3e", "weight": 1}, {"arrows": "to", "from": "126da506-564e-471a-91f1-2759faee1826", "label": 1, "to": "64455ff4-a17a-41db-97ce-6b2c99aefaf9", "weight": 1}, {"arrows": "to", "from": "126da506-564e-471a-91f1-2759faee1826", "label": 1, "to": "15b07cb9-3f51-42a8-8613-839b8589c5b4", "weight": 1}, {"arrows": "to", "from": "ec7f11be-a47b-4905-abaf-df9868f5df3e", "label": 1, "to": "0852ddd9-d630-4f25-b7e0-6168e711df4a", "weight": 1}, {"arrows": "to", "from": "e8165652-0b94-4b03-bf61-97164d2fe87a", "label": 1, "to": "cd4e8469-8bc9-4257-95c8-a5c1ea931e74", "weight": 1}, {"arrows": "to", "from": "0f116c51-7f86-4313-bd62-e4f0c64d3ca8", "label": 1, "to": "a14c740f-e76d-45d6-bf90-70480417a873", "weight": 1}, {"arrows": "to", "from": "a14c740f-e76d-45d6-bf90-70480417a873", "label": 1, "to": "4889c795-bc27-4489-a281-d7e7e5ffb9d7", "weight": 1}, {"arrows": "to", "from": "455da4b8-34e9-4cd0-b538-cfb4a5af8a91", "label": 1, "to": "1c10910d-dc35-449b-ab38-2c02c1bb9607", "weight": 1}, {"arrows": "to", "from": "a867aff4-e386-4a28-9adf-5bdce82c88ef", "label": 1, "to": "647482d5-3181-4cec-af79-f4a179b268e0", "weight": 1}, {"arrows": "to", "from": "a867aff4-e386-4a28-9adf-5bdce82c88ef", "label": 1, "to": "693a69ed-fec7-468e-abb5-07d3aaaeb84b", "weight": 1}, {"arrows": "to", "from": "b4c6e005-dac6-49c5-bba2-4d4041e40544", "label": 1, "to": "8c6df62c-393d-4020-a15e-93330c7ef392", "weight": 1}, {"arrows": "to", "from": "42bf87ed-5da2-4d19-aba8-75b48c520013", "label": 1, "to": "8d807af8-dbda-4bf2-9e82-e9faeaeec9e8", "weight": 1}, {"arrows": "to", "from": "f7bc1463-f223-420d-a8af-2a6a2a16178d", "label": 1, "to": "f32a24c8-43ec-4d18-b389-8f15fafc2d58", "weight": 1}, {"arrows": "to", "from": "54538335-e498-414a-bfc4-0563606bbf9b", "label": 1, "to": "079ed7ba-e82e-4595-b6af-e0e801fccabb", "weight": 1}, {"arrows": "to", "from": "54538335-e498-414a-bfc4-0563606bbf9b", "label": 1, "to": "a6f19584-656b-4107-8bd4-813e6fc4bf80", "weight": 1}, {"arrows": "to", "from": "15e10bfe-e3b8-4046-a943-e766c21a3c26", "label": 1, "to": "6d6d89f7-0b23-46e6-bff0-f6db067b7244", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true,
+        "filter": [
+            "layout",
+            "physics"
+        ]
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": false,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
